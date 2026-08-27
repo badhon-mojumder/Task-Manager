@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/task_card.dart';
+
 class CompleteTaskScreen extends StatefulWidget {
   const CompleteTaskScreen({super.key});
 
@@ -10,6 +12,11 @@ class CompleteTaskScreen extends StatefulWidget {
 class _CompleteTaskScreenState extends State<CompleteTaskScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return  ListView.builder(
+      itemCount: 15,
+      itemBuilder: (context, index) {
+        return TaskCard();
+      },
+    );
   }
 }

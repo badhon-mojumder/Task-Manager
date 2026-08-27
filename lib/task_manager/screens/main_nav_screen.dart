@@ -26,6 +26,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
+        elevation: 5,
         title: Row(
           children: [
             CircleAvatar(
@@ -40,7 +41,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
               children: [
                 Text(
                   'Badhon Mojumder',
-                  style: Theme.of(context).textTheme.titleSmall!
+                  style: Theme.of(context).textTheme.titleMedium!
                       .copyWith(color: Colors.white),
                 ),
                 Text(

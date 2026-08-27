@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/task_card.dart';
+
 class ProgressTaskScreen extends StatefulWidget {
   const ProgressTaskScreen({super.key});
 
@@ -10,6 +12,11 @@ class ProgressTaskScreen extends StatefulWidget {
 class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return  ListView.builder(
+      itemCount: 15,
+      itemBuilder: (context, index) {
+        return TaskCard();
+      },
+    );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/task_card.dart';
+
 class CancelTaskScreen extends StatefulWidget {
   const CancelTaskScreen({super.key});
 
@@ -10,6 +12,12 @@ class CancelTaskScreen extends StatefulWidget {
 class _CancelTaskScreenState extends State<CancelTaskScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return  ListView.builder(
+      itemCount: 15,
+      itemBuilder: (context, index) {
+        return TaskCard();
+      },
+    );
+
   }
 }
