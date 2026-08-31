@@ -1,7 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager/task_manager/controller/auth_controller.dart';
+import 'package:task_manager/task_manager/models/api_response.dart';
+import 'package:task_manager/task_manager/models/user_model.dart';
 import 'package:task_manager/task_manager/screens/main_nav_screen.dart';
 import 'package:task_manager/task_manager/screens/signup_screen.dart';
+import 'package:task_manager/task_manager/service/api_caller.dart';
+import 'package:task_manager/task_manager/utils/urls.dart';
 import 'package:task_manager/task_manager/widgets/screen_bg.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,10 +17,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
-   void goToSignupScreen(){
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignupScreen()));
+  void goToSignupScreen() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SignupScreen()),
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,16 +42,38 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               SizedBox(height: 25),
-              TextFormField(decoration: InputDecoration(hintText: 'Email')),
+              TextFormField(
+                controller: emailController,
+                decoration: InputDecoration(hintText: 'Email'),
+              ),
               SizedBox(height: 25),
               TextFormField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(hintText: 'Password'),
               ),
               SizedBox(height: 20),
               FilledButton(
-                onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MainNavScreen()));
+                onPressed: () async {
+                  final ApiResponse response = await ApiCaller.postRequest(
+                    url: TMUrls.logInUrl,
+                    body: {
+                      "email": emailController.text,
+                      "password": passwordController.text,
+                    },
+                  );
+                  if (response.isSuccess) {
+                    String token = response.responseData['token'];
+                    UserModel model = UserModel.fromJson(
+                      response.responseData['data'],
+                    );
+
+                    await AuthController.saveUserData(token, model);
+                    await Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainNavScreen()),
+                    );
+                  }
                 },
                 child: Icon(Icons.arrow_forward_ios_outlined, size: 20),
               ),
@@ -69,7 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.green,
                               fontWeight: FontWeight.bold,
                             ),
-                            recognizer: TapGestureRecognizer()..onTap = goToSignupScreen
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = goToSignupScreen,
                           ),
                         ],
                       ),
