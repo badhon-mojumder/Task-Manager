@@ -3,7 +3,6 @@ import 'package:task_manager/task_manager/screens/cancel_task_screen.dart';
 import 'package:task_manager/task_manager/screens/complete_task_screen.dart';
 import 'package:task_manager/task_manager/screens/new_task_screen.dart';
 import 'package:task_manager/task_manager/screens/progress_task_screen.dart';
-import 'package:task_manager/task_manager/utils/asset_path.dart';
 
 class MainNavScreen extends StatefulWidget {
   const MainNavScreen({super.key});
@@ -29,11 +28,13 @@ class _MainNavScreenState extends State<MainNavScreen> {
         elevation: 5,
         title: Row(
           children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1695927621677-ec96e048dce2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D',
+            ClipOval(
+              child: Image.network(
+                'https://images.unsplash.com/photo-1695927621677-ec96e048dce2?w=600&auto=format&fit=crop&q=60',
+                width: 55,
+                height: 55,
+                fit: BoxFit.cover,
               ),
-              radius: 30,
             ),
             SizedBox(width: 10),
             Column(

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/task_manager/models/task_list_status.dart';
 
 class TaskCard extends StatelessWidget {
-  const new({
-    super.key,
+  final TaskListStatus taskListStatus;
+  final Color cardColor;
+  final VoidCallback refreshParent;
+  const TaskCard({
+    super.key, required this.taskListStatus, required this.cardColor, required this.refreshParent
   });
 
   @override
@@ -15,20 +19,20 @@ class TaskCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'title',
+              taskListStatus.title.toString(),
               style: Theme.of(context).textTheme.titleLarge!
                   .copyWith(fontSize: 19),
             ),
             SizedBox(height: 3),
             Text(
-              'Description',
+              taskListStatus.description.toString(),
               style: Theme.of(context).textTheme.titleMedium!
                   .copyWith(color: Colors.grey),
             ),
             SizedBox(height: 3),
 
             Text(
-              'Date: 22/03/2026',
+              'Date:${taskListStatus.createdDate}',
               style: Theme.of(context).textTheme.titleMedium!
                   .copyWith(color: Colors.grey[600]),
             ),
@@ -36,11 +40,10 @@ class TaskCard extends StatelessWidget {
             Row(
               children: [
                 Chip(
-                  label: Text(
-                    'New',
+                  label: Text( taskListStatus.status.toString(),
                     style: TextStyle(color: Colors.white),
                   ),
-                  backgroundColor: Colors.blue,
+                  backgroundColor: cardColor,
                   padding: EdgeInsetsGeometry.symmetric(horizontal: 25),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadiusGeometry.circular(50)

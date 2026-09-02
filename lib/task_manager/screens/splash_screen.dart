@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:task_manager/task_manager/controller/auth_controller.dart';
 import 'package:task_manager/task_manager/screens/login_screen.dart';
+import 'package:task_manager/task_manager/screens/main_nav_screen.dart';
 import 'package:task_manager/task_manager/utils/asset_path.dart';
 import 'package:task_manager/task_manager/widgets/screen_bg.dart';
 
@@ -20,8 +21,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> getLoginPage() async {
     await Future.delayed(Duration(seconds: 3));
+    AuthController.getUserData();
+    final isLogin = await AuthController.isUserLogin();
      Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        context, MaterialPageRoute(builder: (context) => isLogin ? MainNavScreen() : LoginScreen()));
   }
 
   @override
