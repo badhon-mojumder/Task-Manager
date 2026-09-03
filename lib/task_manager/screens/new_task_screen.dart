@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/task_manager/controller/auth_controller.dart';
 import 'package:task_manager/task_manager/models/api_response.dart';
 import 'package:task_manager/task_manager/models/task_list_status.dart';
 import 'package:task_manager/task_manager/models/task_status_count.dart';
@@ -95,7 +94,15 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
               child: ListView.builder(
                 itemCount: taskStatusList.length,
                 itemBuilder: (context, index) {
-                  return TaskCard(taskListStatus: taskStatusList[index], cardColor: Colors.blue, refreshParent: (){});
+                  return TaskCard(
+                    taskListStatus: taskStatusList[index],
+                    cardColor: Colors.blue,
+                    refreshParent: () {
+                      getTaskStatusCount();
+                      getTaskList('New');
+                      setState(() {});
+                    },
+                  );
                 },
               ),
             ),
