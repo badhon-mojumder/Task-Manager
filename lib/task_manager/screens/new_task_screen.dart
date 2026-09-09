@@ -78,7 +78,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 itemCount: taskStatusCount.length,
                 itemBuilder: (context, index) {
                   return SizedBox(
-                    width: 90,
+                    width: 95,
                     child: TaskCardCount(
                       title: taskStatusCount[index].sId.toString(),
                       count: taskStatusCount[index].sum!.toInt(),
@@ -86,7 +86,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return SizedBox(width: 10);
+                  return SizedBox(width: 5);
                 },
               ),
             ),

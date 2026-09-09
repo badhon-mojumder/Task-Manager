@@ -35,62 +35,152 @@ class _TaskCardState extends State<TaskCard> {
     }
   }
 
+  Future<void> updateTaskStatus(String status) async {
+    final ApiResponse response = await ApiCaller.getRequest(
+      url: TMUrls.updateTaskStatus(
+        widget.taskListStatus.sId.toString(),
+        status,
+      ),
+    );
+    if (response.isSuccess) {
+      widget.refreshParent();
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Task Updated Successfully')));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Something Wrong...!')));
+    }
+  }
+
+  void showUpdateTaskDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Update Status',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Card(
+              child: ListTile(
+                onTap: () {
+                  updateTaskStatus('New');
+                },
+                title: Text(
+                  'New',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+                trailing: widget.taskListStatus.status == 'New'
+                    ? Icon(Icons.check_circle, color: Colors.green)
+                    : null,
+              ),
+            ),
+            Card(
+              child: ListTile(
+                onTap: () {
+                  updateTaskStatus('Progress');
+                },
+                title: Text(
+                  'Progress',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+                trailing: widget.taskListStatus.status == 'Progress'
+                    ? Icon(Icons.check_circle, color: Colors.green)
+                    : null,
+              ),
+            ),
+            Card(
+              child: ListTile(
+                onTap: () {
+                  updateTaskStatus('Completed');
+                },
+                title: Text(
+                  'Completed',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+                trailing: widget.taskListStatus.status == 'Completed'
+                    ? Icon(Icons.check_circle, color: Colors.green)
+                    : null,
+              ),
+            ),
+            Card(
+              child: ListTile(
+                onTap: () {
+                  updateTaskStatus('Cancelled');
+                },
+                title: Text(
+                  'Cancelled',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+                trailing: widget.taskListStatus.status == 'Cancelled'
+                    ? Icon(Icons.check_circle, color: Colors.green)
+                    : null,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 1,
-      child: Padding(
-        padding: EdgeInsetsGeometry.only(left: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.taskListStatus.title.toString(),
-              style: Theme.of(context).textTheme.titleLarge!
-                  .copyWith(fontSize: 19),
-            ),
-            SizedBox(height: 3),
-            Text(
-              widget.taskListStatus.description.toString(),
-              style: Theme.of(context).textTheme.titleMedium!
-                  .copyWith(color: Colors.grey),
-            ),
-            SizedBox(height: 3),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.taskListStatus.title.toString(),
+            style: Theme.of(context).textTheme.titleLarge!
+                .copyWith(fontSize: 20),
+          ),
+          SizedBox(height: 3),
+          Text(
+            widget.taskListStatus.description.toString(),
+            style: Theme.of(context).textTheme.titleMedium!
+                .copyWith(color: Colors.grey),
+          ),
+          SizedBox(height: 3),
 
-            Text(
-              'Date:${widget.taskListStatus.createdDate}',
-              style: Theme.of(context).textTheme.titleMedium!
-                  .copyWith(color: Colors.grey[600]),
-            ),
-            SizedBox(height: 3),
-            Row(
-              children: [
-                Chip(
-                  label: Text(
-                    widget.taskListStatus.status.toString(),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  backgroundColor: widget.cardColor,
-                  padding: EdgeInsetsGeometry.symmetric(horizontal: 25),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.circular(50),
-                  ),
+          Text(
+            'Date:${widget.taskListStatus.createdDate}',
+            style: Theme.of(context).textTheme.titleMedium!
+                .copyWith(color: Colors.grey[600]),
+          ),
+          SizedBox(height: 3),
+          Row(
+            children: [
+              Chip(
+                label: Text(
+                  widget.taskListStatus.status.toString(),
+                  style: TextStyle(color: Colors.white),
                 ),
-                Spacer(),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.edit_note, color: Colors.deepOrange),
+                backgroundColor: widget.cardColor,
+                padding: EdgeInsetsGeometry.symmetric(horizontal: 25),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadiusGeometry.circular(50),
                 ),
-                IconButton(
-                  onPressed: () {
-                    taskDelete();
-                  },
-                  icon: Icon(Icons.delete, color: Colors.red),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+              Spacer(),
+              IconButton(
+                onPressed: () {
+                  showUpdateTaskDialog();
+                },
+                icon: Icon(Icons.edit_note, color: Colors.deepOrange),
+              ),
+              IconButton(
+                onPressed: () {
+                  taskDelete();
+                },
+                icon: Icon(Icons.delete, color: Colors.red),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -13,14 +13,14 @@ class TaskCardCount extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: EdgeInsetsGeometry.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 1, vertical: 10),
         child: Column(
           children: [
             Text(count.toString(), style: Theme
                 .of(context)
                 .textTheme
                 .titleLarge!.copyWith(
-              fontSize: 23
+              fontSize: 18
             )),
             Text(title, style: Theme
                 .of(context)

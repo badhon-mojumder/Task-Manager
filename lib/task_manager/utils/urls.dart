@@ -6,4 +6,6 @@ class TMUrls {
   static String taskList(String status) => '$baseUrl/listTaskByStatus/$status';
   static String createTask = '$baseUrl/createTask';
   static String deleteTask(String id) => '$baseUrl/deleteTask/$id';
+  static String updateTaskStatus(String id, String status) => '$baseUrl/updateTaskStatus/$id/$status';
+
 }
