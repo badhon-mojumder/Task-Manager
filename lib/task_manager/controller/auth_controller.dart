@@ -35,4 +35,10 @@ class AuthController {
     String? token = sharedPreferences.getString('token');
     return token != null;
   }
+
+  static Future updateUserData(UserModel model) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('user_data', jsonEncode(model.toJson()));
+    userData = model;
+  }
 }

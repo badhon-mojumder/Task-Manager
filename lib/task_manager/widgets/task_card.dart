@@ -130,57 +130,60 @@ class _TaskCardState extends State<TaskCard> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 1,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.taskListStatus.title.toString(),
-            style: Theme.of(context).textTheme.titleLarge!
-                .copyWith(fontSize: 20),
-          ),
-          SizedBox(height: 3),
-          Text(
-            widget.taskListStatus.description.toString(),
-            style: Theme.of(context).textTheme.titleMedium!
-                .copyWith(color: Colors.grey),
-          ),
-          SizedBox(height: 3),
+      child: Padding(
+        padding: EdgeInsetsGeometry.only(left: 10, top: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.taskListStatus.title.toString(),
+              style: Theme.of(context).textTheme.titleLarge!
+                  .copyWith(fontSize: 20),
+            ),
+            SizedBox(height: 3),
+            Text(
+              widget.taskListStatus.description.toString(),
+              style: Theme.of(context).textTheme.titleMedium!
+                  .copyWith(color: Colors.grey),
+            ),
+            SizedBox(height: 3),
 
-          Text(
-            'Date:${widget.taskListStatus.createdDate}',
-            style: Theme.of(context).textTheme.titleMedium!
-                .copyWith(color: Colors.grey[600]),
-          ),
-          SizedBox(height: 3),
-          Row(
-            children: [
-              Chip(
-                label: Text(
-                  widget.taskListStatus.status.toString(),
-                  style: TextStyle(color: Colors.white),
+            Text(
+              'Date:${widget.taskListStatus.createdDate}',
+              style: Theme.of(context).textTheme.titleMedium!
+                  .copyWith(color: Colors.grey[600]),
+            ),
+            SizedBox(height: 3),
+            Row(
+              children: [
+                Chip(
+                  label: Text(
+                    widget.taskListStatus.status.toString(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  backgroundColor: widget.cardColor,
+                  padding: EdgeInsetsGeometry.symmetric(horizontal: 25),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(50),
+                  ),
                 ),
-                backgroundColor: widget.cardColor,
-                padding: EdgeInsetsGeometry.symmetric(horizontal: 25),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadiusGeometry.circular(50),
+                Spacer(),
+                IconButton(
+                  onPressed: () {
+                    showUpdateTaskDialog();
+                  },
+                  icon: Icon(Icons.edit_note, color: Colors.deepOrange),
                 ),
-              ),
-              Spacer(),
-              IconButton(
-                onPressed: () {
-                  showUpdateTaskDialog();
-                },
-                icon: Icon(Icons.edit_note, color: Colors.deepOrange),
-              ),
-              IconButton(
-                onPressed: () {
-                  taskDelete();
-                },
-                icon: Icon(Icons.delete, color: Colors.red),
-              ),
-            ],
-          ),
-        ],
+                IconButton(
+                  onPressed: () {
+                    taskDelete();
+                  },
+                  icon: Icon(Icons.delete, color: Colors.red),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
