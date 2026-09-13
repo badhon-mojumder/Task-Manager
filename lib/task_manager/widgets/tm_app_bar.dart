@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/task_manager/controller/auth_controller.dart';
 import 'package:task_manager/task_manager/screens/profile_update_screeen.dart';
 
+import '../screens/login_screen.dart';
+
 class TMAppBar extends StatelessWidget implements PreferredSize {
   const new({super.key});
 
@@ -12,11 +14,47 @@ class TMAppBar extends StatelessWidget implements PreferredSize {
       elevation: 5,
       title: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ProfileUpdateScreen()),
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Account'),
+                content: const Text('What would you like to do?'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfileUpdateScreen(),
+                        ),
+                      );
+                    },
+                    child: Text('Profile Update'),
+                  ),
+
+                  TextButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      await AuthController.logout();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginScreen(),
+                        ),
+                        (route) => false,
+                      );
+                    },
+                    child: Text('Logout'),
+                  ),
+                ],
+              );
+            },
           );
         },
+
         child: Row(
           children: [
             ClipOval(

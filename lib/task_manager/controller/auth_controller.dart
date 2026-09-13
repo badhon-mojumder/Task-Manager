@@ -41,4 +41,9 @@ class AuthController {
     sharedPreferences.setString('user_data', jsonEncode(model.toJson()));
     userData = model;
   }
+  static Future<void> logout() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+
+    await sharedPreferences.clear();
+  }
 }
